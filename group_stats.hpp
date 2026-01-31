@@ -32,10 +32,10 @@ auto groupStats(const Container & arr, KeyFunc keyFunc, ValueFunc valueFunc) {
     std::map<Key, GroupData> groups;
     std::vector<GroupInfo<Key, Val, T>> result;
 
-    for (const auto& x : arr) {
+    for (const T& x : arr) { /*T-тип контейнера ,описанный в using выше.*/
         Key key = keyFunc(x);
         Val val = valueFunc(x);
-        auto& data = groups[key];
+        GroupData &data = groups[key]; /*GroupData-структура,которая хранится в groups*/
 
         if (!data.initialized) {
             data.minEl = x;
@@ -53,7 +53,7 @@ auto groupStats(const Container & arr, KeyFunc keyFunc, ValueFunc valueFunc) {
 
     result.reserve(groups.size());
 
-    for (const auto& [key, data] : groups) {
+    for (const std::pair<const Key,GroupData> & : groups) { /*pair-шаблонный класс из из utity> */
         GroupInfo<Key, Val, T> group;
         group.key = key;
         group.gsize = data.gsize;
